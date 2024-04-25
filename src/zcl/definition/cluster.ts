@@ -4311,7 +4311,15 @@ const Cluster: {
             // attribute ID: 300's readable, returns a buffer
             reportLocalTemperature: {ID: 301, type: DataType.int16},
             // attribute ID: 512's readable
-            flowMeterConfig: {ID: 576, type: DataType.array},
+            alarmFlowThreshold: {ID: 560, type: DataType.enum8},
+            alarmOptions: {ID: 561, type: DataType.enum8}, // R: 0=nothing,1=alarm,2=close,3=close and alarm
+            flowMeterConfig: {ID: 576, type: DataType.array}, // Configuration when FS422* sensor is present
+                // no flow meter = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0])
+                // FS4220 = [194, 17, 0, 0, 136, 119, 0, 0, 1, 0, 0, 0])
+                // FS4221 = [159, 38, 0, 0, 76, 85, 1, 0, 1, 0, 0, 0])
+                // FS4222 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0])
+            abnormalFlowDuration: {ID: 594, type: DataType.uint32}, // RW 900-86400 seconds
+            abnormalFlowAction: {ID: 595, type: DataType.bitmap16}, // RW 0x0000=do nothing,0x0001=send alert,0x0003=close and alert
             coldLoadPickupStatus: {ID: 643, type: DataType.uint8},
         },
         commands: {
